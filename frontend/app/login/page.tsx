@@ -1,12 +1,24 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, HeartPulse, LockKeyhole, Mail } from "lucide-react";
-
+import { login } from '@/services/auth'
+import { LoginPayload } from "@/types/auth";
 export default function LoginPage() {
   const router = useRouter();
-  const submit = (e: FormEvent) => { e.preventDefault(); router.push("/dashboard"); };
+  const [email, setEmail] = useState<string>('sakib@gmail.com');
+  const [password, setPassword] = useState<string>('welcome2sakib');
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const payload: LoginPayload = {
+      password,
+      username: email,
+    }
+    login(payload);
+    router.push("/dashboard");
+
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-slate-50">
@@ -30,9 +42,21 @@ export default function LoginPage() {
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-ink">Sign in</h2>
           <p className="mt-2 text-sm text-slate-500">Continue to your personal health workspace.</p>
           <form onSubmit={submit} className="mt-7 space-y-4">
-            <label className="block"><span className="mb-2 block text-sm font-semibold text-slate-700">Email</span><div className="relative"><Mail className="absolute left-3 top-3.5 text-slate-400" size={18}/><input defaultValue="sakib@example.com" className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-3 text-sm outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-50"/></div></label>
-            <label className="block"><span className="mb-2 block text-sm font-semibold text-slate-700">Password</span><div className="relative"><LockKeyhole className="absolute left-3 top-3.5 text-slate-400" size={18}/><input type="password" defaultValue="password" className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-10 text-sm outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-50"/><Eye className="absolute right-3 top-3.5 text-slate-400" size={18}/></div></label>
-            <div className="flex justify-end"><button type="button" className="text-xs font-semibold text-teal-700">Forgot password?</button></div>
+            <label className="block"><span className="mb-2 block text-sm font-semibold text-slate-700">Email</span>
+              <div className="relative">
+                <Mail className="absolute left-3 top-3.5 text-slate-400" size={18} />
+                <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-3 text-sm outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-50" />
+              </div>
+            </label>
+            <label className="block">
+              <span className="mb-2 block text-sm font-semibold text-slate-700">Password</span>
+              <div className="relative">
+                <LockKeyhole className="absolute left-3 top-3.5 text-slate-400" size={18} />
+                <input type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-10 text-sm outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-50" /><Eye className="absolute right-3 top-3.5 text-slate-400" size={18} />
+              </div>
+            </label>
+            <div className="flex justify-end"><button type="button" className="text-xs font-semibold text-teal-700">Forgot password?</button>
+            </div>
             <button className="btn-primary w-full py-3">Sign in</button>
           </form>
           <p className="mt-6 text-center text-xs leading-5 text-slate-400">Demo frontend: authentication is mocked. Replace the submit handler with your backend API.</p>

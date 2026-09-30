@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Activity, FileText, History, LayoutDashboard, LogOut, MessageSquare, Plus, UserRound } from "lucide-react";
+import { FileText, History, LayoutDashboard, LogOut, MessageSquare, Plus, UserRound } from "lucide-react";
 import Logo from "./Logo";
 import { chats } from "@/data/mockData";
 
