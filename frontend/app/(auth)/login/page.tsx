@@ -3,20 +3,32 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, HeartPulse, LockKeyhole, Mail } from "lucide-react";
-import { login } from '@/services/auth'
+import { login, me } from '@/services/auth'
 import { LoginPayload } from "@/types/auth";
+import { useAuth } from "@/context/AuthContext";
 export default function LoginPage() {
+  const { setAuth } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState<string>('sakib@gmail.com');
   const [password, setPassword] = useState<string>('welcome2sakib');
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
-    const payload: LoginPayload = {
-      password,
-      username: email,
+    try {
+      const payload: LoginPayload = {
+        password,
+        username: email,
+      }
+      const response = await login(payload);
+      const user = await me();
+      setAuth(response.access_token, user)
+      router.push("/dashboard");
     }
-    login(payload);
-    router.push("/dashboard");
+    catch (error) {
+      console.error(
+        error?.response?.data || error
+      );
+
+    }
 
   };
 

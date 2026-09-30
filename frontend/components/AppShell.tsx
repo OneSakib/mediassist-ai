@@ -5,8 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { FileText, History, LayoutDashboard, LogOut, MessageSquare, Plus, UserRound } from "lucide-react";
 import Logo from "./Logo";
 import { chats } from "@/data/mockData";
-
+import { useAuth } from "@/context/AuthContext";
 export default function AppShell({ children }: { children: React.ReactNode }) {
+  const { user, logout } = useAuth()
   const pathname = usePathname();
   const router = useRouter();
 
@@ -18,7 +19,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     ["/history", History, "Health History"],
     ["/profile", UserRound, "Profile"],
   ] as const;
-
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <div className="min-h-screen bg-mist">
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-[270px] border-r border-slate-200 bg-white lg:flex lg:flex-col">
@@ -61,9 +64,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <div className="grid h-9 w-9 place-items-center rounded-full bg-teal-100 text-sm font-bold text-teal-700">SM</div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-bold">Sakib Malik</p>
-              <p className="truncate text-xs text-slate-400">sakib@example.com</p>
+              <p className="truncate text-xs text-slate-400">{user?.email}</p>
             </div>
-            <button title="Logout" onClick={() => router.push("/login")}><LogOut size={16} className="text-slate-400" /></button>
+            <button title="Logout" onClick={handleLogout}><LogOut size={16} className="text-slate-400" /></button>
           </div>
         </div>
       </aside>

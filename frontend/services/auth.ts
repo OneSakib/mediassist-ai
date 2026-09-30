@@ -1,5 +1,5 @@
-import api from "./api";
-import { LoginResponse, LoginPayload } from "@/types/auth";
+import api from "@/lib/api";
+import { LoginResponse, LoginPayload, MeResponse } from "@/types/auth";
 
 export const login = async (payload: LoginPayload): Promise<LoginResponse> => {
   const response = await api.post<LoginResponse>(
@@ -12,5 +12,9 @@ export const login = async (payload: LoginPayload): Promise<LoginResponse> => {
     },
   );
 
+  return response.data;
+};
+export const me = async (): Promise<MeResponse> => {
+  const response = await api.get<MeResponse>("/api/v1/auth/me");
   return response.data;
 };
