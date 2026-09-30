@@ -15,7 +15,7 @@ dependencies = [
     "sqlalchemy>=2.0.0",
     "alembic>=1.13.0",
     "email-validator>=2.2.0",
-    "passlib[bcrypt]>=1.7.4",
+    "passlib[bcrypt]==1.7.4",
     "pyjwt>=2.9.0",
     "python-multipart>=0.0.9",
     "psycopg[binary]>=3.2.0",
@@ -23,6 +23,7 @@ dependencies = [
     "langchain-openai>=1.6.6",
     "langchain-anthropic>=1.7.5",
     "langgraph>=1.2.12",
+    "bcrypt==4.0.1",
 ]
 
 [project.optional-dependencies]

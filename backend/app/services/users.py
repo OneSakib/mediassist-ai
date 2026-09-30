@@ -11,6 +11,8 @@ def get_user_by_email(db: Session, email: str) -> User | None:
 
 
 def create_user(db: Session, payload: UserCreate) -> User:
+    print("PAYLOAD:", payload)
+    print("has password", hash_password(payload.password))
     user = User(email=payload.email, hashed_password=hash_password(payload.password))
     db.add(user)
     db.commit()

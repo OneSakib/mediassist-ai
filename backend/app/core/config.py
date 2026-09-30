@@ -9,14 +9,24 @@ class Settings(BaseSettings):
     project_name: str = "mediassistant-ai"
     environment: str = "local"
     api_v1_prefix: str = "/api/v1"
-    database_url: str = "postgresql+psycopg://postgres:postgres@localhost:5432/mediassistant_ai"
+    database_url: str = (
+        "postgresql+psycopg://postgres:postgres@db:5432/mediassistant_ai"
+    )
     secret_key: str = "change-this-secret-before-production"
     access_token_expire_minutes: int = 30
-    cors_origins: list[str] = [origin.strip() for origin in "http://localhost:3000,http://localhost:8000".split(",")]
+    cors_origins: list[str] | Any = [
+        "http://localhost:3000",
+        "http://localhost:8000",
+    ]
     allowed_hosts: list[str] = ["*"]
     log_level: str = "INFO"
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        env_ignore_empty=True,
+        extra="ignore",
+    )
 
     @field_validator("cors_origins", mode="before")
     @classmethod

@@ -27,7 +27,9 @@ def login(
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    return Token(access_token=create_access_token(subject=user.email), token_type="bearer")
+    return Token(
+        access_token=create_access_token(subject=user.email), token_type="bearer"
+    )
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)) -> str:

@@ -23,7 +23,6 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
-      - chroma_data:/app/chroma_db
     env_file:
       - ./backend/.env
 
@@ -37,8 +36,7 @@ services:
   #     dockerfile: Dockerfile
   #   command: celery -A app.worker.celery_app worker --loglevel=info --concurrency=1
   #   volumes:
-  #     - ./backend:/app
-  #     - chroma_data:/app/chroma_db
+  #     - ./backend:/app  
   #   env_file:
   #     - ./backend/.env
   #   depends_on:
