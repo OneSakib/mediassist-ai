@@ -1,8 +1,10 @@
+"use client";
+
 import { UserRound, Shield, HeartPulse } from "lucide-react";
 import AppShell from "@/components/AppShell";
 import { useAuth } from "@/context/AuthContext";
 export default function ProfilePage() {
-  const { user, logout } = useAuth()
+  const { user } = useAuth();
   return <AppShell><div className="mx-auto max-w-4xl space-y-6">
     <div><p className="eyebrow">Account</p><h1 className="mt-1 text-3xl font-bold">My Profile</h1><p className="mt-1 text-sm text-slate-500">Demo patient information for the frontend.</p></div>
     <section className="card p-6"><div className="flex items-center gap-4"><div className="grid h-14 w-14 place-items-center rounded-full bg-teal-100 text-lg font-bold text-teal-700">SM</div><div><h2 className="font-bold">Sakib Malik</h2><p className="text-sm text-slate-400">{user?.email}</p></div></div><div className="mt-7 grid gap-4 sm:grid-cols-2">{[["Date of birth", "•• / •• / ••••"], ["Blood group", "B+"], ["Height", "5'5\""], ["Weight", "70 kg"]].map(([a, b]) => <div className="rounded-xl bg-slate-50 p-4" key={a}><p className="text-xs font-semibold text-slate-400">{a}</p><p className="mt-1 font-bold">{b}</p></div>)}</div></section>

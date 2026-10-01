@@ -20,7 +20,8 @@ interface AuthContextType {
     token: string | null;
     loading: boolean;
     isAuthenticated: boolean;
-    setAuth: (token: string, user: User) => void;
+    setAuthToken: (token: string) => void;
+    setAuthUser: (user: User) => void;
     logout: () => void;
 }
 
@@ -76,21 +77,22 @@ export function AuthProvider({
     /**
      * Save authentication after login
      */
-    const setAuth = (
+    const setAuthToken = (
         newToken: string,
-        newUser: User
     ) => {
         sessionStorage.setItem(
             "access_token",
             newToken
         );
-
+        setToken(newToken);
+    };
+    const setAuthUser = (
+        newUser: User
+    ) => {
         sessionStorage.setItem(
             "user",
             JSON.stringify(newUser)
         );
-
-        setToken(newToken);
         setUser(newUser);
     };
 
@@ -117,7 +119,8 @@ export function AuthProvider({
                 token,
                 loading,
                 isAuthenticated,
-                setAuth,
+                setAuthToken,
+                setAuthUser,
                 logout,
             }}
         >

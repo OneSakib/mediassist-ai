@@ -7,7 +7,7 @@ import { login, me } from '@/services/auth'
 import { LoginPayload } from "@/types/auth";
 import { useAuth } from "@/context/AuthContext";
 export default function LoginPage() {
-  const { setAuth } = useAuth();
+  const { setAuthToken, setAuthUser } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState<string>('sakib@gmail.com');
   const [password, setPassword] = useState<string>('welcome2sakib');
@@ -19,8 +19,9 @@ export default function LoginPage() {
         username: email,
       }
       const response = await login(payload);
+      setAuthToken(response.access_token);
       const user = await me();
-      setAuth(response.access_token, user)
+      setAuthUser(user);
       router.push("/dashboard");
     }
     catch (error) {

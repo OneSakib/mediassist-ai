@@ -35,6 +35,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <nav className="mt-6 space-y-1 px-3">
           {nav.map(([href, Icon, label]) => {
             const active = pathname === href;
+            console.log("active", active, pathname, href)
             return (
               <Link key={href} href={href}
                 className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold ${active ? "bg-teal-50 text-teal-700" : "text-slate-600 hover:bg-slate-50"}`}>
@@ -51,7 +52,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <div className="space-y-1">
             {chats.slice(0, 4).map(chat => (
-              <Link key={chat.id} href={`/chat/${chat.id}`} className="block rounded-xl px-3 py-2 hover:bg-slate-50">
+              <Link key={chat.id} href={`/chat/${chat.id}`} className="block rounded-xl px-3 py-2 hover:bg-slate-50 bg-teal-50 text-teal-700">
                 <p className="truncate text-sm font-semibold text-slate-700">{chat.title}</p>
                 <p className="truncate text-xs text-slate-400">{chat.preview}</p>
               </Link>
